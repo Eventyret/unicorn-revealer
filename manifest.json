@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "The 🦄 Unicorn Revealer",
+  "description": "Do you have overflow on your website and want to try find it. Sparkle some 🦄🌈unicorn dust on your website and find where it is.",
+  "version": "1.0.0",
+  "icons": {
+    "128": "icon_128.png",
+    "browser_action": {
+	  "default_icon": "icon.png",
+	  "default_popup": "popup.html"
+	},
+	"permissions": ["activeTab"]
+  }
+}
