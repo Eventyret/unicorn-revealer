@@ -1,7 +1,8 @@
 const contextMenus = {};
+chrome.contextMenus.onClicked.addListener(contextMenuHandler);
 
 contextMenus.createUnicornMenu = chrome.contextMenus.create(
-  { title: 'Sparkle some magic 🌈 dust on this page', contexts: ['all'] },
+  { title: 'Add 🦄🌈 sparkles', contexts: ['all'] },
   function() {
     if (chrome.runtime.lastError) {
       console.error(chrome.runtime.lastError.message);
@@ -9,15 +10,13 @@ contextMenus.createUnicornMenu = chrome.contextMenus.create(
   }
 );
 contextMenus.removeUnicornMenu = chrome.contextMenus.create(
-  { title: 'Remove the sparkling 🌈 you created' },
+  { title: 'Remove 🦄🌈 sparkles', contexts: ['all'] },
   function() {
     if (chrome.runtime.lastError) {
       console.error(chrome.runtime.lastError.message);
     }
   }
 );
-
-chrome.contextMenus.onClicked.addListener(contextMenuHandler);
 
 function contextMenuHandler(info) {
   if (info.menuItemId === contextMenus.createUnicornMenu) {
@@ -30,4 +29,5 @@ function contextMenuHandler(info) {
       code: 'document.getElementById("unicornSparkle").remove()'
     });
   }
+  return;
 }
