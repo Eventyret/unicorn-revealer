@@ -1,17 +1,28 @@
 {
   "name": "unicorn-revealer",
-  "version": "2.0.0",
+  "version": "1.1.0",
   "description": "Chrome extension to reveal overflow issues with a sparkly unicorn touch",
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
+    "build:ts": "esbuild src/*.ts --bundle --outdir=dist --platform=browser --target=chrome100 --format=esm",
+    "build:css": "tailwindcss -i ./src/styles.css -o ./dist/styles.css",
+    "build:html": "cp src/popup.html dist/",
+    "build": "npm run build:ts && npm run build:css && npm run build:html",
+    "dev": "concurrently \"npm run build:ts -- --watch\" \"tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch\"",
     "format": "biome format --write .",
     "lint": "biome lint .",
     "package": "npm run build && zip -r unicorn-revealer.zip dist manifest.json images"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.4.1",
-    "@types/chrome": "^0.0.254",
-    "typescript": "^5.3.0"
+    "@biomejs/biome": "1.9.4",
+    "@types/chrome": "^0.0.290",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
+    "esbuild": "^0.24.2",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "posthog-js": "^1.204.0"
   }
 }

@@ -1,66 +1,39 @@
-"use strict";
-var MenuItemId;
-(function (MenuItemId) {
-    MenuItemId["Create"] = "create-unicorn";
-    MenuItemId["Remove"] = "remove-unicorn";
-})(MenuItemId || (MenuItemId = {}));
-class BackgroundService {
-    constructor() {
-        this.initializeContextMenus();
-        this.setupEventListeners();
+// src/background.ts
+var MENU_ID = "toggle-unicorn-revealer";
+chrome.contextMenus.onClicked.addListener(contextMenuHandler);
+chrome.contextMenus.create(
+  {
+    id: MENU_ID,
+    title: "Toggle \u{1F984}\u{1F308} Revealer",
+    contexts: ["all"]
+  },
+  () => {
+    if (chrome.runtime.lastError) {
+      console.error(chrome.runtime.lastError.message);
     }
-    initializeContextMenus() {
-        for (const [id, config] of Object.entries(BackgroundService.MENU_ITEMS)) {
-            chrome.contextMenus.create({
-                id,
-                ...config
-            }, () => {
-                const error = chrome.runtime.lastError;
-                if (error) {
-                    console.error('Context menu creation error:', error.message);
-                }
-            });
-        }
+  }
+);
+async function contextMenuHandler(info) {
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  if (!tab?.id || info.menuItemId !== MENU_ID) return;
+  await chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    func: () => {
+      const existingSparkle = document.getElementById("unicornSparkle");
+      if (existingSparkle) {
+        existingSparkle.remove();
+      } else {
+        const sparkle = document.createElement("style");
+        sparkle.id = "unicornSparkle";
+        sparkle.textContent = `
+          * {
+            background: #000 !important;
+            color: #fff !important;
+            outline: 1px solid #E91E63 !important;
+          }
+        `;
+        document.body.appendChild(sparkle);
+      }
     }
-    setupEventListeners() {
-        chrome.contextMenus.onClicked.addListener(this.handleContextMenuClick.bind(this));
-    }
-    async handleContextMenuClick(info) {
-        try {
-            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-            if (!tab.id)
-                return;
-            switch (info.menuItemId) {
-                case MenuItemId.Create:
-                    await chrome.scripting.executeScript({
-                        target: { tabId: tab.id },
-                        files: ['dist/unicorn.js']
-                    });
-                    break;
-                case MenuItemId.Remove:
-                    await chrome.scripting.executeScript({
-                        target: { tabId: tab.id },
-                        func: () => {
-                            document.querySelector('#unicornSparkle')?.remove();
-                        }
-                    });
-                    break;
-            }
-        }
-        catch (error) {
-            console.error('Error handling context menu click:', error);
-        }
-    }
+  });
 }
-BackgroundService.MENU_ITEMS = {
-    [MenuItemId.Create]: {
-        title: 'Add 🦄🌈 sparkles',
-        contexts: ['all']
-    },
-    [MenuItemId.Remove]: {
-        title: 'Remove 🦄🌈 sparkles',
-        contexts: ['all']
-    }
-};
-// Initialize the background service
-new BackgroundService();

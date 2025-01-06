@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unicorn Revealer Settings</title>
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body class="w-[300px] p-4 font-sans">
+  <h1 class="text-lg font-semibold mb-4 flex items-center gap-2">
+    <span>🦄</span>
+    <span>Unicorn Revealer</span>
+  </h1>
+  
+  <form id="settings" class="flex flex-col gap-4">
+    <div class="space-y-1">
+      <label for="background" class="text-sm font-medium">Background Color</label>
+      <div class="flex gap-2">
+        <input type="color" name="background" id="background" value="#000000" 
+          class="input-field h-8 w-12 p-0 cursor-pointer">
+        <input type="text" id="backgroundText" class="input-field flex-1"
+          pattern="^#[0-9A-Fa-f]{6}$" placeholder="#000000">
+      </div>
+    </div>
+
+    <div class="space-y-1">
+      <label for="color" class="text-sm font-medium">Text Color</label>
+      <div class="flex gap-2">
+        <input type="color" name="color" id="color" value="#ffffff"
+          class="input-field h-8 w-12 p-0 cursor-pointer">
+        <input type="text" id="colorText" class="input-field flex-1"
+          pattern="^#[0-9A-Fa-f]{6}$" placeholder="#ffffff">
+      </div>
+    </div>
+
+    <div class="space-y-1">
+      <label for="outline" class="text-sm font-medium">Outline Color</label>
+      <div class="flex gap-2">
+        <input type="color" name="outline" id="outline" value="#E91E63"
+          class="input-field h-8 w-12 p-0 cursor-pointer">
+        <input type="text" id="outlineText" class="input-field flex-1"
+          pattern="^#[0-9A-Fa-f]{6}$" placeholder="#E91E63">
+      </div>
+    </div>
+
+    <div class="space-y-1">
+      <label for="outlineWidth" class="text-sm font-medium">Outline Width</label>
+      <input type="text" name="outlineWidth" id="outlineWidth" value="1px" 
+        placeholder="1px" class="input-field">
+    </div>
+
+    <div class="space-y-1">
+      <label for="outlineStyle" class="text-sm font-medium">Outline Style</label>
+      <select name="outlineStyle" id="outlineStyle" class="input-field">
+        <option value="solid">Solid</option>
+        <option value="dashed">Dashed</option>
+        <option value="dotted">Dotted</option>
+      </select>
+    </div>
+
+    <label class="flex items-center gap-2">
+      <input type="checkbox" name="highlightScrollbars" id="highlightScrollbars" checked
+        class="w-4 h-4 text-unicorn-pink rounded focus:ring-unicorn-pink">
+      <span class="text-sm font-medium">Highlight Scrollbars</span>
+    </label>
+
+    <div class="flex gap-2">
+      <button type="button" id="toggleRevealer" class="btn-primary flex-1">
+        Enable Revealer
+      </button>
+      <button type="button" id="resetSettings" 
+        class="btn bg-gray-200 text-gray-800 hover:bg-gray-300">
+        Reset
+      </button>
+    </div>
+  </form>
+
+  <div class="my-4 h-px bg-gray-200"></div>
+
+  <label class="flex items-center gap-2">
+    <input type="checkbox" id="analyticsEnabled" 
+      class="w-4 h-4 text-unicorn-pink rounded focus:ring-unicorn-pink">
+    <span class="text-sm text-gray-600">Help improve by sharing anonymous usage data</span>
+  </label>
+
+  <script src="popup.js"></script>
+</body>
+</html>
