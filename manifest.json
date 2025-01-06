@@ -1,14 +1,20 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Unicorn Revealer",
-  "description": "Do you have overflow on your website and want to try find it. Sparkle some 🦄🌈on your website and find where it is.",
-  "version": "1.0.0",
+  "description": "Do you have overflow on your website and want to try find it? Sparkle some 🦄🌈 on your website and find where it is.",
+  "version": "1.1.0",
   "icons": {
-    "128": "assets/images/icon-128.png"
+    "128": "images/icon-128.png"
   },
   "background": {
-    "persistent": true,
-    "scripts": ["assets/js/background.js"]
+    "service_worker": "dist/background.js",
+    "type": "module"
   },
-  "permissions": ["contextMenus", "activeTab"]
+  "permissions": ["contextMenus", "activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_icon": {
+      "128": "images/icon-128.png"
+    }
+  }
 }

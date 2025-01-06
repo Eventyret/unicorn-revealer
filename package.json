@@ -1,0 +1,17 @@
+{
+  "name": "unicorn-revealer",
+  "version": "2.0.0",
+  "description": "Chrome extension to reveal overflow issues with a sparkly unicorn touch",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "format": "biome format --write .",
+    "lint": "biome lint .",
+    "package": "npm run build && zip -r unicorn-revealer.zip dist manifest.json images"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.4.1",
+    "@types/chrome": "^0.0.254",
+    "typescript": "^5.3.0"
+  }
+}
